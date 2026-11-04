@@ -198,7 +198,7 @@ def first_come(theQueue, contextCost, size):
           "Waiting", "Turnaround", "Response", "Status")
     while holdPcb != -1:
         # We should wait here till the next task comes in here then do context switch since we only do switch once our boi arrives
-        clock = max(clock, theQueue.peek_Arrival())
+        clock = max(clock, holdPcb.arrival)
         turnAround = ((holdPcb.exec + clock) - holdPcb.arrival)
         waiting =  turnAround - holdPcb.exec
         response = clock - holdPcb.arrival
@@ -209,10 +209,7 @@ def first_come(theQueue, contextCost, size):
         turnAroundAvg += turnAround
         waitingAvg += waiting
         responseAvg += response
-        clock += holdPcb.exec
-        # We should wait here till the next task comes in here then do context switch since we only do switch once our boi arrives
-        clock = max(clock, theQueue.peek_Arrival())
-        clock += contextCost
+        clock += (holdPcb.exec + contextCost)
         holdPcb = theQueue.get_h()
     if contextAmount == 0:
         contextAmount += 1
