@@ -1,0 +1,5 @@
+researcher,0,8,3,web_search,web_search
+coder,1,4,2,code_runner,code_runner
+mailer,2,2,1,send_email,send_email
+web_reader,3,5,3,web_search;send_email,web_search
+chat,4,1,1,,
