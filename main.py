@@ -143,6 +143,8 @@ def round_robin(theQueue, quantum, contextCost, size):
         "Name", "Arrival", "Burst", "Priority", "Completion",
         "Waiting", "Turnaround", "Response", "Status")
     while holdPcb != -1:
+        #this is wheere the waiting happens in order to account gpr large delta times between task
+        clock = max(clock, holdPcb.arrival)
         if holdPcb.startTime < 0:
             holdPcb.startTime = clock
         if holdPcb.remaining <= quantum:
@@ -171,8 +173,6 @@ def round_robin(theQueue, quantum, contextCost, size):
         if ready_queue.peek_Arrival() != -1:
             holdPcb = ready_queue.get_h()
         else:
-            #this is wheere the waiting happens right before the context sqwitch
-            clock = max(clock,theQueue.peek_Arrival())
             holdPcb = theQueue.get_h()
         clock += contextCost
         contextAmount += 1
